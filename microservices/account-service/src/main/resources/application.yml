@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: account-service
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: event:com.mmo.microservice.account.event.SaveTokenEvent
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    template:
+      default-topic: notificationTopic
+    bootstrap-servers: localhost:9092
+  datasource:
+    url: jdbc:mysql://54.153.147.252:3306/account_service?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: reelsRestDba123
+    hikari:
+      idle-timeout: '30000'
+      minimum-idle: '5'
+      maximum-pool-size: '50'
+      pool-name: MyHikariCP
+      connection-test-query: SELECT 1
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    #    generate-ddl: true
+    hibernate.ddl-auto: update
+#    hibernate.ddl-auto: create-drop
+#    hibernate.ddl-auto: create
+tiktok:
+  exchange:
+    grant-type: fb_exchange_token
+    client-id: 616217330425521
+    client-secret: ce299e5a1eb347e628ad992acdad26a0
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+server:
+  port: 0

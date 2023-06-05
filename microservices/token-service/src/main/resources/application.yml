@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: token-service
+  kafka:
+    template:
+      default-topic: notificationTopic
+    consumer:
+      group-id: tokenId
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: event:com.mmo.microservice.token.kafka.event.SaveTokenEvent
+    bootstrap-servers: localhost:9092
+  datasource:
+    url: jdbc:mysql://54.153.147.252:3306/token_service?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: reelsRestDba123
+    hikari:
+      idle-timeout: '30000'
+      minimum-idle: '5'
+      maximum-pool-size: '50'
+      pool-name: MyHikariCP
+      connection-test-query: SELECT 1
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    #    generate-ddl: true
+    hibernate.ddl-auto: update
+#    hibernate.ddl-auto: create-drop
+#    hibernate.ddl-auto: create
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+server:
+  port: 0
